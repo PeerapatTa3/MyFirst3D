@@ -1,0 +1,209 @@
+[gd_scene load_steps=15 format=3 uid="uid://bbdk4ejeqvbsj"]
+
+[ext_resource type="PackedScene" uid="uid://c48pxlvwhjoce" path="res://Scene/player.tscn" id="1_f6udf"]
+[ext_resource type="Script" uid="uid://de7yn0p0bjiu" path="res://Scene/main.gd" id="1_sblpm"]
+[ext_resource type="PackedScene" uid="uid://bqqaqbdtcumgo" path="res://Scene/enemy.tscn" id="2_r34rm"]
+[ext_resource type="Script" uid="uid://bo8yyony7m2yr" path="res://Scene/label.gd" id="4_2wwxx"]
+[ext_resource type="Texture2D" uid="uid://b4ufnvea6vfir" path="res://art/chicken.jpg" id="5_3amdw"]
+[ext_resource type="AudioStream" uid="uid://bkio8kmbwalo6" path="res://art/chicken-soundscape-200111.mp3" id="6_1xcnr"]
+[ext_resource type="PackedScene" uid="uid://doolxd6etc4lu" path="res://art/Grass.glb" id="7_ow1sv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wwxx"]
+albedo_color = Color(3.17663e-06, 0.833815, 0.461642, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+material = SubResource("StandardMaterial3D_2wwxx")
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r34rm"]
+albedo_color = Color(0.970539, 0.452847, 0.346409, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2wwxx"]
+material = SubResource("StandardMaterial3D_r34rm")
+
+[sub_resource type="Curve3D" id="Curve3D_3amdw"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 24.0658, 0, -24.0812, 0, 0, 0, 0, 0, 0, 23.9, 0, 23.7407, 0, 0, 0, 0, 0, 0, -24.0596, 0, 23.7665, 0, 0, 0, 0, 0, 0, -24.0596, 0, -24.2512),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2wwxx"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_sblpm")
+mob_scene = ExtResource("2_r34rm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("BoxShape3D_7dm0k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.258819, 0.965926, 0, -0.933013, 0.25, 0.258819, 0.25, -0.0669873, 0.965926, 0, 10, 10)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_f6udf")]
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, -6, 5)
+
+[node name="Cylinders" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -24)
+mesh = SubResource("CylinderMesh_2wwxx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -24)
+mesh = SubResource("CylinderMesh_2wwxx")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 24)
+mesh = SubResource("CylinderMesh_2wwxx")
+skeleton = NodePath("../MeshInstance3D2")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24)
+mesh = SubResource("CylinderMesh_2wwxx")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_3amdw")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(-0.999994, 0, 0.00346675, 0, 1, 0, -0.00346675, 0, -0.999994, 24.0658, 0, -24.0812)
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.575
+anchor_top = 1.325
+anchor_right = 2.525
+anchor_bottom = 1.9
+offset_right = -13.0
+theme_override_colors/font_color = Color(0.482714, 0.826224, 0.129697, 1)
+text = "Score : 0"
+script = ExtResource("4_2wwxx")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 0
+anchor_left = 0.475
+anchor_top = 0.425
+anchor_right = 7.5
+anchor_bottom = 1.0
+text = "นายพีรพัฒน์ แท่นประยุทธ 673380288-6"
+metadata/_edit_use_anchors_ = true
+
+[node name="Retry" type="TextureRect" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 18.075
+anchor_bottom = 13.55
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_3amdw")
+
+[node name="Label" type="Label" parent="UI/Retry"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.315353
+anchor_top = 0.424354
+anchor_right = 0.702628
+anchor_bottom = 0.586716
+offset_right = -1.52588e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "Try --->"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="UI/Retry"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.637621
+anchor_top = 0.46679
+anchor_right = 0.793914
+anchor_bottom = 0.568266
+offset_left = -3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wwxx")
+text = "again"
+metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_1xcnr")
+autoplay = true
+
+[node name="Grass" type="Node3D" parent="."]
+
+[node name="Root Scene" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3, -1, 4)
+
+[node name="Root Scene2" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 7, -1, -2)
+
+[node name="Root Scene3" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2, -1, -4)
+
+[node name="Root Scene4" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3, -1, 2)
+
+[node name="Root Scene5" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4, -1, -3)
+
+[node name="Root Scene6" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2, -1, 1)
+
+[node name="Root Scene7" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4, -1, 4)
+
+[node name="Root Scene8" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.13515, -1, 5.39374)
+
+[node name="Root Scene9" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.23657, -1, 5.1094)
+
+[node name="Root Scene10" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -8.45826, -1, -3.8388)
+
+[node name="Root Scene11" parent="Grass" instance=ExtResource("7_ow1sv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -6.03476, -1, 1.61267)
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="pressed" from="UI/Retry/Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://c48pxlvwhjoce"]
+
+[ext_resource type="PackedScene" uid="uid://54yreupla53y" path="res://art/Chicken.glb" id="1_kelma"]
+[ext_resource type="Script" uid="uid://dcw5mv7p2jxa" path="res://Scene/player.gd" id="1_y8w33"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y8w33"]
+size = Vector3(0.138763, 0.350342, 0.423096)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y8w33"]
+radius = 0.158955
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 6
+script = ExtResource("1_y8w33")
+speed = 6
+bounce_impulse = 8
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Character" parent="Pivot" instance=ExtResource("1_kelma")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00798035, 0.175659, 0.0263921)
+shape = SubResource("BoxShape3D_y8w33")
+
+[node name="MobDetector" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.230132, 0)
+shape = SubResource("SphereShape3D_y8w33")
+debug_color = Color(0.992448, 0, 0.251883, 0.42)
+
+[connection signal="body_entered" from="MobDetector" to="." method="_on_mob_detector_body_entered"]
