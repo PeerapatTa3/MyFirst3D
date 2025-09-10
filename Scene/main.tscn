@@ -93,6 +93,50 @@ transform = Transform3D(-0.999994, 0, 0.00346699, 0, 1, 0, -0.00346699, 0, -0.99
 wait_time = 0.5
 autostart = true
 
+[node name="Retry" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_3amdw")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Retry"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.315353
+anchor_top = 0.424354
+anchor_right = 0.702628
+anchor_bottom = 0.586716
+offset_right = -1.52588e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "Try --->"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Retry"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.637621
+anchor_top = 0.46679
+anchor_right = 0.793914
+anchor_bottom = 0.568266
+offset_left = -3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wwxx")
+text = "again"
+metadata/_edit_use_anchors_ = true
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -119,51 +163,6 @@ anchor_top = 0.425
 anchor_right = 7.5
 anchor_bottom = 1.0
 text = "นายพีรพัฒน์ แท่นประยุทธ 673380288-6"
-metadata/_edit_use_anchors_ = true
-
-[node name="Retry" type="TextureRect" parent="UI"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 18.075
-anchor_bottom = 13.55
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_3amdw")
-expand_mode = 2
-
-[node name="Label" type="Label" parent="UI/Retry"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.315353
-anchor_top = 0.424354
-anchor_right = 0.702628
-anchor_bottom = 0.586716
-offset_right = -1.52588e-05
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 64
-text = "Try --->"
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="UI/Retry"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.637621
-anchor_top = 0.46679
-anchor_right = 0.793914
-anchor_bottom = 0.568266
-offset_left = -3.05176e-05
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wwxx")
-text = "again"
 metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -231,4 +230,4 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -5.61158, -0.999999, 5.
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
-[connection signal="pressed" from="UI/Retry/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Retry/Button" to="." method="_on_button_pressed"]

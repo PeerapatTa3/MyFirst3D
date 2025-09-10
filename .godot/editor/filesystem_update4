@@ -1,2 +1,5 @@
 res://Scene/player.tscn
 res://Scene/main.tscn
+res://Scene/main.gd
+res://Scene/enemy.tscn
+res://Scene/enemy.gd

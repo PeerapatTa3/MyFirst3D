@@ -11,14 +11,22 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func initialize(start_position: Vector3, player_position: Vector3) -> void:
-	# Place the mob at the spawn point and rotate it to face the player
-	look_at_from_position(start_position, player_position, Vector3.UP)
+	# Keep mob on ground
+	start_position.y = -1.0
 
-	# Calculate the direction toward the player
-	var direction = (player_position - start_position).normalized()
+	# Copy player position but flatten Y so mob looks horizontally
+	var target = player_position
+	target.y = start_position.y
 
-	# Set velocity toward the player
-	velocity = direction * randf_range(min_speed,max_speed)
+	# Place mob and rotate only around Y
+	look_at_from_position(start_position, target, Vector3.UP)
+
+	# Calculate direction toward player, ignoring vertical difference
+	var direction = (target - start_position).normalized()
+
+	velocity = direction * randf_range(min_speed, max_speed)
+
+
 
 func _on_visible_on_screen_notifier_3d_screen_exited():
 	queue_free()

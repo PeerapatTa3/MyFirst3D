@@ -3,7 +3,7 @@ extends Node
 @export var mob_scene: PackedScene
 
 func _ready():
-	$UI/Retry.hide()
+	$Retry.hide()
 
 func _on_mob_timer_timeout():
 	# Create a new instance of the Mob scene.
@@ -25,9 +25,9 @@ func _on_mob_timer_timeout():
 	add_child(mob)
 
 func _on_player_hit() -> void:
-	$UI/Retry.show()
+	$Retry.show()
 	$MobTimer.stop()
 
 func _on_button_pressed() -> void:
-	if $UI/Retry.visible:
+	if $Retry.visible:
 		get_tree().reload_current_scene()
