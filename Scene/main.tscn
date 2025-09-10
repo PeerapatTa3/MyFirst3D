@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bbdk4ejeqvbsj"]
+[gd_scene load_steps=16 format=3 uid="uid://bbdk4ejeqvbsj"]
 
 [ext_resource type="PackedScene" uid="uid://c48pxlvwhjoce" path="res://Scene/player.tscn" id="1_f6udf"]
 [ext_resource type="Script" uid="uid://de7yn0p0bjiu" path="res://Scene/main.gd" id="1_sblpm"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bo8yyony7m2yr" path="res://Scene/label.gd" id="4_2wwxx"]
 [ext_resource type="Texture2D" uid="uid://b4ufnvea6vfir" path="res://art/chicken.jpg" id="5_3amdw"]
 [ext_resource type="AudioStream" uid="uid://bkio8kmbwalo6" path="res://art/chicken-soundscape-200111.mp3" id="6_1xcnr"]
+[ext_resource type="FontFile" uid="uid://dvr0cnvvqa18r" path="res://art/Kanit-Bold.ttf" id="6_75buv"]
 [ext_resource type="PackedScene" uid="uid://doolxd6etc4lu" path="res://art/Grass.glb" id="7_ow1sv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
@@ -105,25 +106,25 @@ expand_mode = 1
 [node name="Label" type="Label" parent="Retry"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.315353
-anchor_top = 0.424354
-anchor_right = 0.702628
-anchor_bottom = 0.586716
-offset_right = -1.52588e-05
+anchor_left = 0.422222
+anchor_top = 0.103704
+anchor_right = 0.566667
+anchor_bottom = 0.603704
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 64
-text = "Try --->"
+text = "Try
+  |
+  \\/"
 metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="Retry"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.637621
-anchor_top = 0.46679
-anchor_right = 0.793914
-anchor_bottom = 0.568266
-offset_left = -3.05176e-05
+anchor_left = 0.415278
+anchor_top = 0.62037
+anchor_right = 0.571571
+anchor_bottom = 0.721846
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
@@ -146,10 +147,10 @@ offset_bottom = 40.0
 [node name="ScoreLabel" type="Label" parent="UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.575
-anchor_top = 1.325
-anchor_right = 2.525
-anchor_bottom = 1.9
+anchor_left = 0.45
+anchor_top = 1.375
+anchor_right = 2.4
+anchor_bottom = 1.95
 offset_right = -13.0
 theme_override_colors/font_color = Color(0.482714, 0.826224, 0.129697, 1)
 text = "Score : 0"
@@ -162,6 +163,7 @@ anchor_left = 0.475
 anchor_top = 0.425
 anchor_right = 7.5
 anchor_bottom = 1.0
+theme_override_fonts/font = ExtResource("6_75buv")
 text = "นายพีรพัฒน์ แท่นประยุทธ 673380288-6"
 metadata/_edit_use_anchors_ = true
 
